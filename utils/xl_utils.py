@@ -16,7 +16,7 @@ def get_xl_layer_representations(seq_len, text_array, remove_chars, word_ind_to_
     token_embeddings = []
     for word in text_array:
         current_token_embedding = get_xl_token_embeddings([word], tokenizer, model, remove_chars)
-    token_embeddings.append(np.mean(current_token_embedding.detach().numpy(), 1))
+        token_embeddings.append(np.mean(current_token_embedding.detach().numpy(), 1))
     
     # where to store layer-wise xl embeddings of particular length
     XL = {}
@@ -148,36 +148,3 @@ def add_word_xl_embedding(model_dict, embeddings_to_add, token_inds_to_avrg, spe
             full_sequence_embedding = layer_embedding.detach().numpy()
             model_dict[layer].append(np.mean(full_sequence_embedding[0,token_inds_to_avrg,:],0)) # avrg over all tokens for specified word
     return model_dict
-    
-# add the embeddings for all individual words
-# specific_layer specifies only one layer to add embeddings from
-def add_all_xl_embeddings(xl_dict, embeddings_to_add, specific_layer=-1):
-    if specific_layer >= 0:
-        layer_embedding = embeddings_to_add[specific_layer]
-        seq_len = layer_embedding.shape[1]
-        full_sequence_embedding = layer_embedding.detach().cpu().numpy()
-        
-        for word in range(seq_len):
-            xl_dict[specific_layer].append(full_sequence_embedding[0,word,:])
-    else:  
-        for layer, layer_embedding in enumerate(embeddings_to_add):
-            seq_len = layer_embedding.shape[1]
-            full_sequence_embedding = layer_embedding.detach().cpu().numpy()
-
-            for word in range(seq_len):
-                xl_dict[layer].append(full_sequence_embedding[0,word,:])
-    return xl_dict
-        
-# add the embeddings for only the last word in the sequence
-def add_last_xl_embedding(xl_dict, embeddings_to_add, specific_layer=-1):
-    if specific_layer >= 0:
-        layer_embedding = embeddings_to_add[specific_layer]
-        full_sequence_embedding = layer_embedding.detach().cpu().numpy()
-        
-        xl_dict[specific_layer].append(full_sequence_embedding[0,-1,:])
-    else:
-        for layer, layer_embedding in enumerate(embeddings_to_add):
-            full_sequence_embedding = layer_embedding.detach().cpu().numpy()
-
-            xl_dict[layer].append(full_sequence_embedding[0,-1,:])
-    return xl_dict

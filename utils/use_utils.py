@@ -2,8 +2,6 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
 
-module_url = "https://tfhub.dev/google/universal-sentence-encoder/2" #@param ["https://tfhub.dev/google/universal-sentence-encoder/2", "https://tfhub.dev/google/universal-sentence-encoder-large/3"]
-
 
 def clean_word(word, remove_chars):
     word2 = word[:]
@@ -13,7 +11,9 @@ def clean_word(word, remove_chars):
         word2 = word2[:-1]    
     return word2
 
-def get_use_layer_representations(seq_len, text_array, remove_chars, word_ind_to_extract):
+def get_use_layer_representations(seq_len, text_array, remove_chars):
+    
+    module_url = "https://tfhub.dev/google/universal-sentence-encoder/2" #@param ["https://tfhub.dev/google/universal-sentence-encoder/2", "https://tfhub.dev/google/universal-sentence-encoder-large/3"]
 
     # Import the Universal Sentence Encoder's TF Hub module
     embed = hub.Module(module_url)
@@ -36,4 +36,3 @@ def get_use_layer_representations(seq_len, text_array, remove_chars, word_ind_to
     USE[-1] = [np.zeros((20,sequence.shape[1])),sequence]
     
     return USE
-

@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 from pytorch_pretrained_bert import BertTokenizer, BertModel
+import time as tm
 
 def get_bert_layer_representations(seq_len, text_array, remove_chars, word_ind_to_extract):
 
@@ -12,7 +13,7 @@ def get_bert_layer_representations(seq_len, text_array, remove_chars, word_ind_t
     token_embeddings = []
     for word in text_array:
         current_token_embedding = get_bert_token_embeddings([word], tokenizer, model, remove_chars)
-    token_embeddings.append(np.mean(current_token_embedding.detach().numpy(), 1))
+        token_embeddings.append(np.mean(current_token_embedding.detach().numpy(), 1))
     
     # where to store layer-wise bert embeddings of particular length
     BERT = {}

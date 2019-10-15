@@ -12,7 +12,7 @@ def get_elmo_layer_representations(seq_len, text_array, remove_chars, word_ind_t
     
     # where to store layer-wise elmo embeddings of particular length
     elmo = {}
-    for layer in range(-1,3):
+    for layer in range(-1,2):
         elmo[layer] = []
 
     if word_ind_to_extract < 0: # the index is specified from the end of the array, so invert the index
@@ -61,11 +61,11 @@ def predict_elmo_embeddings(words_in_array, tokenizer, model, remove_chars):
     for i,word in enumerate(words_in_array):
         word_ind_to_token_ind[i] = []      # initialize token indices array for current word
 
-        word_tokens = tokenizer.tokenize(word)
+        word_tokens = tokenizer.tokenize(str(word))
             
         for token in word_tokens:
             if token not in remove_chars:  # don't add any tokens that are in remove_chars
-                seq_tokens.append(token)
+                seq_tokens.append(str(token))
                 word_ind_to_token_ind[i].append(n_seq_tokens)
                 n_seq_tokens = n_seq_tokens + 1
     
@@ -84,7 +84,7 @@ def predict_elmo_embeddings(words_in_array, tokenizer, model, remove_chars):
 def add_avrg_token_embedding_for_specific_word(word_seq,tokenizer,model,remove_chars,from_start_word_ind_to_extract,model_dict):
     
     word_seq = list(word_seq)  
-    all_sequence_embeddings, word_ind_to_token_ind, _ = predict_elmo_embeddings(word_seq, tokenizer, model, remove_chars)
+    all_sequence_embeddings, word_ind_to_token_ind = predict_elmo_embeddings(word_seq, tokenizer, model, remove_chars)
     token_inds_to_avrg = word_ind_to_token_ind[from_start_word_ind_to_extract]
     model_dict = add_word_elmo_embedding(model_dict, all_sequence_embeddings,token_inds_to_avrg)
     
@@ -92,31 +92,7 @@ def add_avrg_token_embedding_for_specific_word(word_seq,tokenizer,model,remove_c
 
 # add the embeddings for a specific word in the sequence
 # token_inds_to_avrg: indices of tokens in embeddings output to avrg
-def add_word_elmo_embedding(elmo_dict, embeddings_to_add, token_inds_to_avrg, specific_layer=-1):
-    if specific_layer >= 0:  # only add embeddings for one specified layer
-        layer_embedding = embeddings_to_add[specific_layer]
-        full_sequence_embedding = layer_embedding.detach().numpy()
-        elmo_dict[specific_layer].append(np.mean(full_sequence_embedding[0,token_inds_to_avrg,:],0))
-    else:
-        for layer, layer_embedding in enumerate(embeddings_to_add):
-            full_sequence_embedding = layer_embedding.detach().numpy()
-            elmo_dict[layer].append(np.mean(full_sequence_embedding[0,token_inds_to_avrg,:],0)) # avrg over all tokens for specified word
-    return elmo_dict
-
-
-    
-# add the embeddings for all individual words
-def add_all_elmo_embeddings(elmo_dict, embeddings_to_add):
-    for layer in range(3):
-      
-        seq_len = embeddings_to_add.shape[1]
-        
-        for word in range(seq_len):
-            elmo_dict[layer].append(embeddings_to_add[layer,word,:])
-    return elmo_dict
-        
-# add the embeddings for only the last word in the sequence
-def add_last_elmo_embedding(elmo_dict, embeddings_to_add):
-    for layer in range(3):        
-        elmo_dict[layer].append(embeddings_to_add[layer,-1,:])
+def add_word_elmo_embedding(elmo_dict, embeddings_to_add, token_inds_to_avrg):
+    for layer in elmo_dict.keys():
+            elmo_dict[layer].append(np.mean(embeddings_to_add[layer+1,token_inds_to_avrg,:],0)) # avrg over all tokens for specified word
     return elmo_dict
