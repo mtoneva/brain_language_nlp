@@ -33,7 +33,7 @@ Needed dependencies for each model:
 The following command can be used to derive the NLP features that we used to obtain the results in Figures 2 and 3:
 ```
 python extract_nlp_features.py
-    --nlp_model bert/transformer_xl/elmo/use   
+    --nlp_model [bert/transformer_xl/elmo/use]   
     --sequence_length s
     --output_dir nlp_features
 ```
