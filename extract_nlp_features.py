@@ -28,7 +28,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print(args)
     
-    text_array = np.load('/data/stimuli_words.npy')
+    text_array = np.load(os.getcwd() + '/data/stimuli_words.npy')
     remove_chars = [",","\"","@"]
     
     
