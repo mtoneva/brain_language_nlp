@@ -14,7 +14,7 @@ Bibtex:
 ## fMRI Recordings of 8 Subjects Reading Harry Potter
 You can download the already [preprocessed data here](https://drive.google.com/drive/folders/1Q6zVCAJtKuLOh-zWpkS3lH8LBvHcEOE8?usp=sharing). This data contains fMRI recordings for 8 subjects reading one chapter of Harry Potter. The data been detrended, smoothed, and trimmed to remove the first 20TRs and the last 15TRs. For more information about the data, refer to the paper. We have also provided the precomputed voxel neighborhoods that we have used to compute the searchlight classification accuracies. 
 
-The following code expects that these directories are positioned under the data directory in this repository.
+The following code expects that these directories are positioned under the data folder in this repository (e.g. `./data/fMRI/` and `./data/voxel_neighborhoods`.
 
 
 ## Measuring Alignment Between Brain Recordings and NLP representations
