@@ -50,7 +50,7 @@ where s ranges from to 1 to 40. This command derives the representation for all 
 Note: This code has been tested using python3.7
 
 ```
-python make_predictions.py
+python predict_brain_from_nlp.py
     --subject [F,H,I,J,K,L,M,N]
     --nlp_feat_type [bert/elmo/transformer_xl/use]   
     --nlp_feat_dir INPUT_FEAT_DIR
@@ -66,7 +66,7 @@ This call builds encoding models to predict the fMRI recordings using representa
 Note: This code has been tested using python3.7
 
 ```
-python evaluate_predictions.py
+python evaluate_brain_predictions.py
     --input_path INPUT_PATH
     --output_path OUTPUT_PATH
     --subject [F,H,I,J,K,L,M,N]
