@@ -30,7 +30,7 @@ In our paper, we present alignment results from 4 different NLP models - ELMo, B
 ### Deriving representations of text from an NLP model
 
 Needed dependencies for each model:
-- USE: Tensorflow < 1.8
+- USE: Tensorflow < 1.8,  `pip install tensorflow_hub`
 - ELMo: `pip install allennlp`
 - BERT/Transformer-XL: `pip install pytorch_pretrained_bert`
 
