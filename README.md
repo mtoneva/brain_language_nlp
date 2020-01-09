@@ -45,7 +45,7 @@ python extract_nlp_features.py
 where s ranges from to 1 to 40. This command derives the representation for all sequences of `s` consecutive words in the stimuli text in `/data/stimuli_words.npy` from the model specified in `--nlp_model` and saves one file for each layer in the model in the specified `--output_dir`. The names of the saved files contain the argument values that were used to generate them. The output files are numpy arrays of size `n_words x n_dimensions`, where `n_words` is the number of words in the stimulus text and `n_dimensions` is the number of dimensions in the embeddings of the specified model in `--nlp_model`. Each row of the output file contains the representation of the most recent `s` consecutive words in the stimulus text (i.e. row `i` of the output file is derived by passing words `i-s+1` to `i` through the pretrained NLP model).
 
 
-### Building encoding model to predict MEG recordings
+### Building encoding model to predict fMRI recordings
 
 Note: This code has been tested using python3.7
 
