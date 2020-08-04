@@ -167,8 +167,8 @@ def run_class_time_CV_fmri_crossval_ridge(data, predict_feat_dict,
             train_data = train_data[:-skip,:]
             train_features = train_features[:-skip,:]
         else:
-            train_data = train_data[skip:-skip,:]
-            train_features = train_features[skip:-skip,:]
+            test_data = test_data[skip:-skip,:]
+            test_features = test_features[skip:-skip,:]
 
         # normalize data
         train_data = np.nan_to_num(zscore(np.nan_to_num(train_data)))
