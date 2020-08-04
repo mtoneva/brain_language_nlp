@@ -111,7 +111,7 @@ def prepare_fmri_features(train_features, test_features, word_train_indicator, T
     p = all_features.shape[1]
     tmp = np.zeros([time.shape[0], p])
     for i in range(time.shape[0]):
-        tmp[i] = np.mean(all_features[(words_id<=i)*(words_id>=i-1)],0)
+        tmp[i] = np.mean(all_features[(words_id<=i)*(words_id>i-1)],0)
     tmp = delay_mat(tmp, np.arange(1,5))
 
     # remove the edges of each run
