@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
 
     # loading fMRI data
-    data = np.load('./data/fMRI/data_subject_{}.npy'.format(args.subject))
 
+    data = np.load('./data/fMRI/data_subject_{}.npy'.format(args.subject))
     corrs_t, _, _, preds_t, test_t = run_class_time_CV_fmri_crossval_ridge(data,
                                                                 predict_feat_dict)
 

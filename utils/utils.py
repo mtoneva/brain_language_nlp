@@ -141,9 +141,9 @@ def run_class_time_CV_fmri_crossval_ridge(data, predict_feat_dict,
     corrs = np.zeros((n_folds, n_voxels))
     acc = np.zeros((n_folds, n_voxels))
     acc_std = np.zeros((n_folds, n_voxels))
-    preds_d = np.zeros((data.shape[0], data.shape[1]))
 
     all_test_data = []
+    all_preds = []
     
     
     for ind_num in range(n_folds):
@@ -181,15 +181,14 @@ def run_class_time_CV_fmri_crossval_ridge(data, predict_feat_dict,
         start_time = tm.time()
         weights, chosen_lambdas = cross_val_ridge(train_features,train_data, n_splits = 10, lambdas = np.array([10**i for i in range(-6,10)]), method = 'plain',do_plot = False)
 
-        preds =  np.dot(test_features, weights)
+        preds = np.dot(test_features, weights)
         corrs[ind_num,:] = corr(preds,test_data)
-        preds_d[test_ind] = preds
+        all_preds.append(preds)
             
-
         print('fold {} completed, took {} seconds'.format(ind_num, tm.time()-start_time))
         del weights
 
-    return corrs, acc, acc_std, preds_d, np.vstack(all_test_data)
+    return corrs, acc, acc_std, np.vstack(all_preds), np.vstack(all_test_data)
 
 def binary_classify_neighborhoods(Ypred, Y, n_class=20, nSample = 1000,pair_samples = [],neighborhoods=[]):
     # n_class = how many words to classify at once
