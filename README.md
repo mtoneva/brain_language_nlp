@@ -4,11 +4,12 @@ This repository contains code for the paper [Interpreting and improving natural-
 
 Bibtex: 
 ```
-@inproceedings{brain_language_nlp,
-    title={Interpreting and improving natural-language processing (in machines) with natural language-processing (in the brain)},
-    author={Toneva, Mariya and Wehbe, Leila},
-    booktitle={NeurIPS},
-    year={2019}
+@inproceedings{toneva2019interpreting,
+  title={Interpreting and improving natural-language processing (in machines) with natural language-processing (in the brain)},
+  author={Toneva, Mariya and Wehbe, Leila},
+  booktitle={Advances in Neural Information Processing Systems},
+  pages={14954--14964},
+  year={2019}
 }
 ```
 ## fMRI Recordings of 8 Subjects Reading Harry Potter
